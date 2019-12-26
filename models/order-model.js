@@ -40,6 +40,10 @@ const OrderSchema = new schema({
     },
     create_time: {
         type: Date
+    },
+    isDeleted: {
+        type:Boolean,
+        default:false
     }
 })
 
