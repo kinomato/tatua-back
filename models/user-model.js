@@ -37,12 +37,10 @@ const UserSchema = schema({
         type: Number,
         require: true
     },
-    orders:[
-        {
-            type:schema.Types.ObjectId,
-            ref:'order'
-        }
-    ]
+    isDeleted: {
+        type: Boolean,
+        default:false
+    }
 })
 
 const User = mongoose.model('User', UserSchema, 'user')

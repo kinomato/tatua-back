@@ -4,8 +4,14 @@ const config = require('config');
 const mongoose = require('mongoose');
 const Order = require('../models/order-model');
 
-router.get('/listOrder', (err, data) => {
-
+router.get('/', (req, res) => {
+    Order.find({}, (err, data) => {
+        if (err) {
+            res.status(400).json({ msg: `something gone wrong: ${err}` })
+        }
+        res.json(data);
+    })
+    .catch(err => res.status(400).json({ msg: `something gone wrong: ${err}` }))
 })
 router.post('/userorder', (req, res) => {
     const { uid } = req.body;
@@ -52,4 +58,20 @@ router.post('/saveorder', (req, res) => {
             res.status(400).json({ reason });
         })
 })
+router.put('/delete/:id', (req, res) => {
+    Order.findById(req.params.id, (err, data) => {
+        // res.json('object deleted successfull');
+        if (!data.isDeleted) {
+            data.isDeleted = true; //thay doi isDeleted
+            data.save()
+                .then(() => {
+                    res.json('object deleted successfull');
+                })
+                .catch(err => {
+                    res.status(400).json({error:err});
+                });
+        }
+        res.json('object already deleted');
+    })
+});
 module.exports = router;
