@@ -15,15 +15,23 @@ router.get('/:id', (req, res) => {
 
 //lấy hết Product
 router.get('/', (req, res) => {
-    Product.find({}, (err, data) => {
-        if (err || data.isDeleted) {
+    Product.find({"isDeleted":false}, (err, data) => {
+        if (err ) {
             res.status(400).json({ msg: `something gone wrong: ${err}` })
         }
         res.json(data);
     })
         .catch(err => res.status(400).json({ msg: `something gone wrong: ${err}` }))
 })
-
+router.get('/productlist', (req, res) => {
+    Product.find({}, (err, data) => {
+        if (err ) {
+            res.status(400).json({ msg: `something gone wrong: ${err}` })
+        }
+        res.json(data);
+    })
+        .catch(err => res.status(400).json({ msg: `something gone wrong: ${err}` }))
+})
 
 
 //Edit 1 product

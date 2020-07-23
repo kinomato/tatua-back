@@ -10,6 +10,13 @@ const Topping = require('../models/topping-model');
 // @access public
 // lấy tổng số document user
 router.get("/", (req, res) => {
+    Topping.find({"isDeleted":false}, (err, data) => {
+        if (err)
+            return res.status(400).json({ msg: `lỗi ${err}` });
+        res.json(data);
+    })
+})
+router.get("/topplist", (req, res) => {
     Topping.find({}, (err, data) => {
         if (err)
             return res.status(400).json({ msg: `lỗi ${err}` });
